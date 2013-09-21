@@ -1,0 +1,6 @@
+# Vim Temp Files
+*.swo
+*.swp
+
+# Compiled .class
+*.class
