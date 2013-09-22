@@ -49,28 +49,16 @@ object Main {
   /**
    * Exercise 3
    */
+  // if money == 0 there is 1 way, if there are no coins, there are 0 ways
   def countChange(money: Int, coins: List[Int]): Int = {
-
-    def innerLoop(numWays: Int, moneyRemain: Int, curCoin: Int, remain: List[Int]): Int = {
-      if (moneyRemain % curCoin == 0) {
-        if (remain.isEmpty) numWays + 1
-        else innerLoop(numWays + 1, money, remain.head, remain.tail)
-      } else {
-        if (remain.isEmpty) numWays
-        else {
-          if (moneyRemain - curCoin > 0) 
-            innerLoop(numWays, moneyRemain - curCoin, remain.head, remain.tail)
-          else 
-            numWays
-        }
-      }
-    }
-
     if (coins.isEmpty) {
       0
+    } else if (money == 0) {
+      1
+    } else if (money - coins.head >= 0) {
+      countChange(money - coins.head, coins) + countChange(money, coins.tail)
     } else {
-      innerLoop(0, money, coins.head, coins.tail)
+      countChange(money, coins.tail)
     }
-
   }
 }

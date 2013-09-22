@@ -7,3 +7,7 @@ test-only recfun.BalanceSuite
 console
 test-only recfun.BalanceSuite
 console
+test-only recfun.CountChangeSuite
+console
+test-only recfun.CountChangeSuite
+test
