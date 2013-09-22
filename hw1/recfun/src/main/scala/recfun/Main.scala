@@ -43,12 +43,34 @@ object Main {
         }
       }
     }
-    
     innerBalance(0, 0)
   }
 
   /**
    * Exercise 3
    */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  def countChange(money: Int, coins: List[Int]): Int = {
+
+    def innerLoop(numWays: Int, moneyRemain: Int, curCoin: Int, remain: List[Int]): Int = {
+      if (moneyRemain % curCoin == 0) {
+        if (remain.isEmpty) numWays + 1
+        else innerLoop(numWays + 1, money, remain.head, remain.tail)
+      } else {
+        if (remain.isEmpty) numWays
+        else {
+          if (moneyRemain - curCoin > 0) 
+            innerLoop(numWays, moneyRemain - curCoin, remain.head, remain.tail)
+          else 
+            numWays
+        }
+      }
+    }
+
+    if (coins.isEmpty) {
+      0
+    } else {
+      innerLoop(0, money, coins.head, coins.tail)
+    }
+
+  }
 }

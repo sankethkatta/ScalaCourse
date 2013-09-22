@@ -6,3 +6,4 @@ console
 test-only recfun.BalanceSuite
 console
 test-only recfun.BalanceSuite
+console

@@ -1,0 +1,5 @@
+test
+test-only example.sum
+console
+test-only example.ListSuite
+console
