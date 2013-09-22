@@ -28,10 +28,7 @@ object Main {
   def balance(chars: List[Char]): Boolean = {
     def innerBalance(idx: Int, count: Int): Boolean = {
       if (idx == chars.size) {
-
-        if (count == 0) true
-        else false
-
+        count == 0
       } else { 
         if (chars(idx) == '(') {
           innerBalance(idx + 1, count + 1)
@@ -49,7 +46,6 @@ object Main {
   /**
    * Exercise 3
    */
-  // if money == 0 there is 1 way, if there are no coins, there are 0 ways
   def countChange(money: Int, coins: List[Int]): Int = {
     if (coins.isEmpty) {
       0
