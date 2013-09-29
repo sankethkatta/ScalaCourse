@@ -46,12 +46,13 @@ class FunSetSuite extends FunSuite {
 
   test("test intersect") {
     val ss = FunSets.singletonSet(5)
-    val ss2 = FunSets.singletonSet(10)
+    val ss2: FunSets.Set = (x) => x > 0
     val inter = FunSets.intersect(ss, ss)
     val inter2 = FunSets.intersect(ss, ss2)
     assert(inter(5) === true)
     assert(inter(10) === false)
-    assert(inter2(5) === false)
+    assert(inter2(5) === true)
+    assert(inter2(-5) === false)
   }
 
   test("test diff") {
@@ -69,7 +70,54 @@ class FunSetSuite extends FunSuite {
     assert(filt(5) === true)
     assert(filt2(5) === false)
   }
+
+  test("test forall") {
+    val positiveSet: FunSets.Set = x => x > 0
+    val evenFilter: Int => Boolean = x => x % 2 == 0 
+    val greaterFilter: Int => Boolean = x => x > -10
+    val lessFilter: Int => Boolean = x => x < -10
+    
+    assert(FunSets.forall(positiveSet, evenFilter) === false)
+    assert(FunSets.forall(positiveSet, greaterFilter) === true)
+    assert(FunSets.forall(positiveSet, lessFilter) === false)
+  }
   
+  test("test exists") {
+    val positiveSet: FunSets.Set = x => x > 0
+    val evenFilter: Int => Boolean = x => x % 2 == 0 
+    val greaterFilter: Int => Boolean = x => x > -10
+    val lessFilter: Int => Boolean = x => x < -10
+    
+    assert(FunSets.exists(positiveSet, evenFilter) === true)
+    assert(FunSets.exists(positiveSet, greaterFilter) === true)
+    assert(FunSets.exists(positiveSet, lessFilter) === false)
+  }
+
+  /**
+   * If original set contains 1, 2, 3, 4 and f(x) = 2*x
+   * New set should be 2, 4, 6, 8
+   */
+  test("test map") {
+    val smallSet: FunSets.Set = x => x >= 1 && x <= 4
+    val f: Int => Int = x => 2*x
+    val f2: Int => Int = x => x*x
+    val mappedSet = FunSets.map(smallSet, f)
+    val mappedSet2 = FunSets.map(smallSet, f2)
+
+    assert(FunSets.contains(mappedSet, 1) === false)
+    assert(FunSets.contains(mappedSet, 2) === true)
+    assert(FunSets.contains(mappedSet, 3) === false)
+    assert(FunSets.contains(mappedSet, 4) === true)
+    assert(FunSets.contains(mappedSet, 6) === true)
+    assert(FunSets.contains(mappedSet, 8) === true)
+
+    assert(FunSets.contains(mappedSet2, 1) === true)
+    assert(FunSets.contains(mappedSet2, 2) === false)
+    assert(FunSets.contains(mappedSet2, 3) === false)
+    assert(FunSets.contains(mappedSet2, 4) === true)
+    assert(FunSets.contains(mappedSet2, 9) === true)
+    assert(FunSets.contains(mappedSet2, 16) === true)
+  }
   /**
    * For ScalaTest tests, there exists a special equality operator "===" that
    * can be used inside "assert". If the assertion fails, the two values will
