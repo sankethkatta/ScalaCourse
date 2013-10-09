@@ -55,7 +55,7 @@ abstract class TweetSet {
    * Question: Should we implment this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-   def union(that: TweetSet): TweetSet = ???
+  def union(that: TweetSet): TweetSet = filterAcc(t => true, that)
 
   /**
    * Returns the tweet from this set which has the greatest retweet count.
@@ -67,6 +67,7 @@ abstract class TweetSet {
    * and be implemented in the subclasses?
    */
   def mostRetweeted: Tweet = ???
+  def mostRetweetedAcc(maxTweet: Tweet): Tweet = ???
 
   /**
    * Returns a list containing all tweets of this set, sorted by retweet count
@@ -112,9 +113,9 @@ class Empty extends TweetSet {
 
   def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = acc
 
-  override def union(that: TweetSet): TweetSet = that
-
   override def mostRetweeted: Tweet = throw new java.util.NoSuchElementException
+  
+  override def mostRetweetedAcc(maxTweet: Tweet) = maxTweet
    
   override def descendingByRetweet: TweetList = Nil
 
@@ -133,18 +134,25 @@ class Empty extends TweetSet {
 
 class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
-  def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = 
+  def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = {
     if (p(elem)) {
-      (left.union(right)).filterAcc(p, acc.incl(elem))
+      left.filterAcc(p, right.filterAcc(p, acc.incl(elem)))
     } else {
-      (left.union(right)).filterAcc(p, acc)
+      left.filterAcc(p, right.filterAcc(p, acc))
     }
+  }
 
-  override def union(that: TweetSet): TweetSet = ((left.union(right)).union(that)).incl(elem)
+  override def mostRetweeted: Tweet = mostRetweetedAcc(elem)
 
-  override def mostRetweeted: Tweet = right.mostRetweeted
+  override def mostRetweetedAcc(maxTweet: Tweet): Tweet = {
+    val leftMost = left.mostRetweetedAcc(elem)
+    val rightMost = right.mostRetweetedAcc(elem)
+    if (leftMost.retweets >= rightMost.retweets && leftMost.retweets >=  elem.retweets) leftMost
+    else if (rightMost.retweets >= leftMost.retweets && rightMost.retweets >= elem.retweets) rightMost
+    else elem
+  }
 
-  override def descendingByRetweet: TweetList = ???
+  override def descendingByRetweet: TweetList = new Cons(this.mostRetweeted, (this.remove(this.mostRetweeted)).descendingByRetweet)
 
   /**
    * The following methods are already implemented
@@ -199,14 +207,15 @@ object GoogleVsApple {
   val google = List("android", "Android", "galaxy", "Galaxy", "nexus", "Nexus")
   val apple = List("ios", "iOS", "iphone", "iPhone", "ipad", "iPad")
 
-  lazy val googleTweets: TweetSet = ???
-  lazy val appleTweets: TweetSet = ???
+  lazy val googleTweets: TweetSet = TweetReader.allTweets.filter(t => google.exists(w => t.text contains w))
+
+  lazy val appleTweets: TweetSet = TweetReader.allTweets.filter(t => apple.exists(w => t.text contains w))
 
   /**
    * A list of all tweets mentioning a keyword from either apple or google,
    * sorted by the number of retweets.
    */
-  lazy val trending: TweetList = ???
+  lazy val trending: TweetList = (appleTweets union googleTweets).descendingByRetweet
 }
 
 object Main extends App {

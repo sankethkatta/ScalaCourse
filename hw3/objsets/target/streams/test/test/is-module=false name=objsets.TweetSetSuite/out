@@ -2,32 +2,10 @@
 [0m[[0minfo[0m] [0m[32m- filter: on empty set[0m[0m
 [0m[[0minfo[0m] [0m[32m- filter: a on set5[0m[0m
 [0m[[0minfo[0m] [0m[32m- filter: 20 on set5[0m[0m
+[0m[[0minfo[0m] [0m[32m- filter: 12 on set6[0m[0m
+[0m[[0minfo[0m] [0m[32m- filter: 0 on set6[0m[0m
 [0m[[0minfo[0m] [0m[32m- union: set4c and set4d[0m[0m
 [0m[[0minfo[0m] [0m[32m- union: with empty set (1)[0m[0m
 [0m[[0minfo[0m] [0m[32m- union: with empty set (2)[0m[0m
-[0m[[0minfo[0m] [0m[31m- most retweets *** FAILED ***[0m[0m
-[0m[[0minfo[0m] [0m[31m  java.util.NoSuchElementException:[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.Empty.mostRetweeted(TweetSet.scala:117)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.NonEmpty.mostRetweeted(TweetSet.scala:145)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.NonEmpty.mostRetweeted(TweetSet.scala:145)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.NonEmpty.mostRetweeted(TweetSet.scala:145)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.NonEmpty.mostRetweeted(TweetSet.scala:145)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$7$$anon$7.<init>(TweetSetSuite.scala:67)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$7.apply$mcV$sp(TweetSetSuite.scala:66)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$7.apply(TweetSetSuite.scala:66)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$7.apply(TweetSetSuite.scala:66)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.FunSuite$$anon$1.apply(FunSuite.scala:1265)[0m[0m
-[0m[[0minfo[0m] [0m[31m  ...[0m[0m
-[0m[[0minfo[0m] [0m[31m- descending: set5 *** FAILED ***[0m[0m
-[0m[[0minfo[0m] [0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
-[0m[[0minfo[0m] [0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:252)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.NonEmpty.descendingByRetweet(TweetSet.scala:147)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$8$$anon$8.<init>(TweetSetSuite.scala:73)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$8.apply$mcV$sp(TweetSetSuite.scala:72)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$8.apply(TweetSetSuite.scala:72)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$8.apply(TweetSetSuite.scala:72)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.FunSuite$$anon$1.apply(FunSuite.scala:1265)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.Suite$class.withFixture(Suite.scala:1974)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite.withFixture(TweetSetSuite.scala:9)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.FunSuite$class.invokeWithFixture$1(FunSuite.scala:1262)[0m[0m
-[0m[[0minfo[0m] [0m[31m  ...[0m[0m
+[0m[[0minfo[0m] [0m[32m- most retweets[0m[0m
+[0m[[0minfo[0m] [0m[32m- descending: set5[0m[0m
