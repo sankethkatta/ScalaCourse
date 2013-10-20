@@ -116,7 +116,8 @@ object Huffman {
       val secondChars = chars(second)
       val firstWeight = weight(first)
       val secondWeight = weight(second)
-      Fork(first, second, firstChars ::: secondChars, firstWeight + secondWeight) :: leftOver
+      val retFork = Fork(first, second, firstChars ::: secondChars, firstWeight + secondWeight) :: leftOver
+      retFork.sortBy(tree => weight(tree))
     }
   }
 
