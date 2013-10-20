@@ -230,26 +230,12 @@ object Huffman {
         acc
       } else {
         curTree match {
-          case leaf: Leaf => encodeAcc(tree, charsLeft, acc)
+          case leaf: Leaf => encodeAcc(tree, charsLeft.tail, acc)
           case fork: Fork => {
-            val leftChars = fork.left match {
-              case leaf: Leaf => List(leaf.char)
-              case fork: Fork => fork.chars
-            }
-            val rightChars = fork.right match {
-              case leaf: Leaf => List(leaf.char)
-              case fork: Fork => fork.chars
-            }
-            if (leftChars contains charsLeft.head) {
-              fork.left match {
-                case leaf:Leaf => encodeAcc(tree, charsLeft.tail, acc ::: List(0))
-                case fork:Fork => encodeAcc(fork.left, charsLeft.tail, acc ::: List(0))
-              }
+            if (chars(fork.left) contains charsLeft.head) {
+              encodeAcc(fork.left, charsLeft, acc ::: List(0))
             } else {
-              fork.right match {
-                case leaf:Leaf => encodeAcc(tree, charsLeft.tail, acc ::: List(1))
-                case fork:Fork => encodeAcc(fork.right, charsLeft.tail, acc ::: List(1))
-              }
+              encodeAcc(fork.right, charsLeft, acc ::: List(1))
             }
           }
         }
