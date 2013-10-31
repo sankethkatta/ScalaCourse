@@ -143,19 +143,18 @@ object Anagrams {
    *
    *  Note: There is only one anagram of an empty sentence.
    */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ??? 
-    /*
-    def occAnagrams(occSent: Occurrences): List[Sentence] = {
-        if (occSent.isEmpty) List(List())
-        else {
-          for {
-            split <- 1 to occSent.length
-            word <- dictionaryByOccurrences.(occSent.take(split))
-            rest <- occAnagrams(occSent.drop(split))
-          } yield word :: rest
-        }.toList
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
+    def anagramsHelp(occ: Occurrences): List[Sentence] = {
+      if (occ.isEmpty) List(List())
+      else {
+        for {
+          combo <- combinations(occ)
+          word <- dictionaryByOccurrences.getOrElse(combo, Nil)
+          rest <- anagramsHelp(subtract(occ, combo))
+        } yield word :: rest
+      }
     }
-    occAnagrams(sentenceOccurrences(sentence))
+    anagramsHelp(sentenceOccurrences(sentence))
   }
-  */
+
 }
